@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // React Router navigation
-import { login } from "../services/authService";
-import { Button } from 'primereact/button';
+import { useNavigate } from "react-router-dom";
+import { login } from "../core/services/authService";
+import "primeicons/primeicons.css"; 
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -38,7 +39,7 @@ const Login = () => {
                 Email
               </label>
               <input
-                className="block w-full p-1 mb-4 border border-gray-500 rounded"
+                className="block w-full p-2 border border-gray-500 rounded"
                 type="email"
                 id="email"
                 required
@@ -47,48 +48,41 @@ const Login = () => {
               />
             </div>
 
-            <div className="space-y-1">
+            <div className="relative space-y-1">
               <label className="text-sm text-gray-500" htmlFor="password">
                 Password
               </label>
-              <input
-                className="block w-full p-1 border border-gray-500 rounded"
-                type="password"
-                id="password"
-                required
-                minLength="6"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <div className="relative">
+                <input
+                  className="block w-full p-2 border border-gray-500 rounded pr-10"
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  required
+                  minLength="6"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
+                >
+                  {showPassword ? <i className="pi pi-eye"></i> : <i className="pi pi-eye-slash"></i>}
+                </button>
+              </div>
             </div>
-
-            <p className="text-xs text-center text-gray-500">
-              By clicking Agree & Join, you agree to the LinkedIn
-              <a className="font-medium hover:underline text-linkedin" href="#">
-                User Agreement
-              </a>
-              ,
-              <a className="font-medium hover:underline text-linkedin" href="#">
-                Privacy Policy
-              </a>
-              , and
-              <a className="font-medium hover:underline text-linkedin" href="#">
-                Cookie Policy
-              </a>
-              .
-            </p>
 
             {error && <p className="text-red-500 text-center">{error}</p>}
 
             <button
-              className="w-full h-12 font-medium bg-purple-500/75 hover:bg-purple-700 transition-colors text-black rounded-full bg-linkedin hover:bg-linkedin-dark"
+              className="w-full h-12 font-medium bg-purple-500/75 hover:bg-purple-700 transition-colors text-black rounded-full"
               type="submit"
               disabled={loading}
             >
               {loading ? "Logging in..." : "Login"}
             </button>
           </form>
-          
+
           <p className="mt-4 text-center">
             Request An Account?{" "}
             <a className="font-medium hover:underline text-linkedin" href="#">

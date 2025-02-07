@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Layout from "../components/Layout";
 
 const Dashboard = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -12,13 +13,17 @@ const Dashboard = () => {
     } else {
       setIsAuthenticated(true);
     }
-  }, []);
+  }, [navigate]);
 
   if (!isAuthenticated) {
     return <p>Loading...</p>;
   }
 
-  return <div>Welcome to the Admin Dashboard!</div>;
+  return (
+    <Layout>
+      <h1 className="text-2xl font-semibold">Dashboard Page</h1>
+    </Layout>
+  );
 };
 
 export default Dashboard;
