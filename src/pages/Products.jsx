@@ -9,6 +9,7 @@ import axios from "axios";
 import { addProduct, deleteProduct, getProductById, getProducts } from "../core/services/products.services";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Dropdown } from "primereact/dropdown";
 
 function Products() {
     const [visible, setVisible] = useState(false);
@@ -17,15 +18,22 @@ function Products() {
     const [uploadedFileName, setUploadedFileName] = useState(null);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const toast = useRef(null);
+
     const columns = [
         { field: 'name', header: 'Nom' },
         { field: 'type', header: 'Type' },
         { field: 'price', header: 'Price' },
         { field: 'price_before', header: 'Perfect Before' }
     ];
+
+    const display = [
+        { name: "Single", code: "Single" },
+        { name: "Double", code: "Double" }
+    ]
     const [product, setProduct] = useState({
         name: "",
         type: "",
+        display: "",
         description: "",
         price: "",
         price_before: "",
@@ -191,6 +199,20 @@ function Products() {
                         />
                     </div>
                     <div className="flex flex-col space-y-2 mb-5">
+                        <label className="font-medium text-gray-700">Display :</label>
+                        <Dropdown
+                            name="display" // Ensure the name attribute is present
+                            value={display.find(option => option.name === product.display) || null}
+                            onChange={(e) => handleInputChange({ target: { name: "display", value: e.value.name } })}
+                            options={display}
+                            optionLabel="name"
+                            placeholder="Select a Display type"
+                            className="w-full md:w-14rem"
+                            style={{ border: "2px solid gray", borderRadius: "4px" }}
+                        />
+                    </div>
+
+                    <div className="flex flex-col space-y-2 mb-5">
                         <label className="font-medium text-gray-700">Type:</label>
                         <InputText
                             name="type"
@@ -287,7 +309,7 @@ function Products() {
                                     src={selectedProduct.photos}
                                     alt="Product"
                                     className="h-auto rounded-md object-cover w-56 mt-3"
-                                    style={{ alignSelf: "center"}}          
+                                    style={{ alignSelf: "center" }}
                                 />
                             )}
                             <div className="flex flex-col space-y-2 mb-5">
@@ -304,6 +326,15 @@ function Products() {
                                 <InputText
                                     name="type"
                                     value={selectedProduct.type}
+                                    className="p-2"
+                                    style={{ border: "2px solid gray", borderRadius: "4px" }}
+                                />
+                            </div>
+                            <div className="flex flex-col space-y-2 mb-5">
+                                <label className="font-medium text-gray-700">Type:</label>
+                                <InputText
+                                    name="type"
+                                    value={selectedProduct.display}
                                     className="p-2"
                                     style={{ border: "2px solid gray", borderRadius: "4px" }}
                                 />

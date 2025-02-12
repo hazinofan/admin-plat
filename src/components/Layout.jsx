@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
       <Sidebar />
 
       {/* Main Content */}
-      <div className="flex-1 p-6 bg-gray-100">
+      <div className="flex-1 p-6 bg-purple-50" style={{ height: "max-content"}}>
         {children} 
       </div>
     </div>
