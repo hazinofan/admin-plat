@@ -71,6 +71,15 @@ const Sidebar = () => {
             <i className="pi pi-file-edit text-lg"></i>
             {isExpanded && <span className="ml-2 text-sm font-medium">Blogs</span>}
           </Link>
+          <Link
+            className={`flex items-center px-3 py-2 text-gray-600 transition-all duration-300 rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 ${
+              isExpanded ? "" : "justify-center"
+            }`}
+            to="/orders"
+          >
+            <i className="pi pi-credit-card text-lg"></i>
+            {isExpanded && <span className="ml-2 text-sm font-medium">Order Validation</span>}
+          </Link>
         </div>
 
         {/* Content */}

@@ -10,7 +10,7 @@ body {
   margin: 0;
   font-family: "Inter", serif;
   font-optical-sizing: auto;
-  font-weight: 400;
+  font-weight: 600;
   font-style: normal;
 
 }
@@ -18,4 +18,19 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.p-selectbutton .p-button.p-highlight {
+  background-color: #9333ea !important; /* Purple */
+  border: 2px solid #7e22ce !important; /* Darker Purple Border */
+  color: white !important;
+}
+
+.p-selectbutton .p-button.p-highlight:hover {
+  background-color: #7e22ce !important; /* Darker purple on hover */
+}
+.p-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px; /* Adds space between No & Yes buttons */
 }

@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import Blogs from "./pages/Blogs";
 import AddBlogs from "./pages/AddBlogs";
+import Orders from "./pages/Orders";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/add-blogs" element={<AddBlogs />} />
+        <Route path="/orders" element={<Orders />} />
 
       </Routes>
     </Router>

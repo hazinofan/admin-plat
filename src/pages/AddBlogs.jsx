@@ -55,7 +55,7 @@ const AddBlogs = () => {
             },
         });
         quill.on("text-change", () => {
-            const updatedContent = quill.root.innerHTML.trim(); // Trim to remove empty spaces
+            const updatedContent = quill.root.innerHTML.trim(); 
             setContent(updatedContent);
         });
 

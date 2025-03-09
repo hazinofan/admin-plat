@@ -6,7 +6,11 @@ import reportWebVitals from './reportWebVitals';
 import "primereact/resources/themes/saga-blue/theme.css"; // PrimeReact theme
 import "primereact/resources/primereact.min.css";         // PrimeReact core styles
 import "primeicons/primeicons.css";                      // PrimeIcons
-import "./index.css";                                    
+import "./index.css";         
+import "primereact/resources/themes/lara-light-indigo/theme.css"; // ✅ Theme
+import "primereact/resources/primereact.min.css"; // ✅ PrimeReact core styles
+import "primeicons/primeicons.css"; // ✅ PrimeIcons (for icons)
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
