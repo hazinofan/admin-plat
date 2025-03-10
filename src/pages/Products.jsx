@@ -22,6 +22,7 @@ function Products() {
     const columns = [
         { field: 'name', header: 'Nom' },
         { field: 'type', header: 'Type' },
+        { field: 'display', header: 'Display' },
         { field: 'price', header: 'Price' },
         { field: 'price_before', header: 'Perfect Before' }
     ];

@@ -7,6 +7,9 @@ import Products from "./pages/Products";
 import Blogs from "./pages/Blogs";
 import AddBlogs from "./pages/AddBlogs";
 import Orders from "./pages/Orders";
+import Users from "./pages/Users";
+import Terminal from "./pages/Terminal";
+import Tickets from "./pages/Tickets";
 
 
 function App() {
@@ -19,7 +22,9 @@ function App() {
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/add-blogs" element={<AddBlogs />} />
         <Route path="/orders" element={<Orders />} />
-
+        <Route path="/users" element={<Users />} />
+        <Route path="/cmd" element={<Terminal />} />
+        <Route path="/tickets" element={<Tickets />} />
       </Routes>
     </Router>
   );
