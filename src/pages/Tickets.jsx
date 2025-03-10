@@ -10,9 +10,12 @@ import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { InputSwitch } from "primereact/inputswitch";
 import { Toast } from "primereact/toast";
+import { useNavigate } from "react-router-dom";
 
 function Tickets() {
     const [loading, setLoading] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
     const [visible, setVisible] = useState(false);
     const [selectedTicket, setSelectedTicket] = useState(null);
     const [status, setStatus] = useState("open"); // ✅ Add state for status
@@ -112,6 +115,15 @@ function Tickets() {
         getUsersTickets();
     }, []);
 
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/");
+        } else {
+            setIsAuthenticated(true);
+        }
+    }, [navigate])
+
     return (
         <Layout>
             <Toast ref={toast} /> {/* ✅ Add Toast for Notifications */}
@@ -131,7 +143,7 @@ function Tickets() {
             {/* Ticket Details Dialog */}
             <Dialog header="Ticket Details" visible={visible} style={{ width: "50vw" }} onHide={() => setVisible(false)}>
                 <div className="flex flex-col space-y-2 mb-5">
-                    <p className="mb-5 text-xl font-semibold text-purple-500"> New Ticket from : <span className="text-black"> { selectedTicket?.user.full_name}</span></p>
+                    <p className="mb-5 text-xl font-semibold text-purple-500"> New Ticket from : <span className="text-black"> {selectedTicket?.user.full_name}</span></p>
                     <label className="font-medium text-gray-700">USER EMAIL :</label>
                     <InputText
                         name="created_at"

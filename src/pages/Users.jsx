@@ -7,12 +7,15 @@ import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import { Toast } from 'primereact/toast'
 import { Dropdown } from 'primereact/dropdown'
+import { useNavigate } from 'react-router-dom'
 
 function Users() {
     const [users, setUsers] = useState([])
     const [viewDialog, setViewDialog] = useState(false);
     const [editDialog, setEditDialog] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
     const toast = useRef(null)
 
     const [formData, setFormData] = useState({
@@ -81,7 +84,7 @@ function Users() {
         try {
             await deleteUser(userId);
 
-            if (toast.current) { 
+            if (toast.current) {
                 toast.current.show({
                     severity: "success",
                     summary: "Deleted",
@@ -90,11 +93,11 @@ function Users() {
                 });
             }
 
-            fetchUsers();  
+            fetchUsers();
         } catch (error) {
             console.error("Error deleting user:", error);
 
-            if (toast.current) { 
+            if (toast.current) {
                 toast.current.show({
                     severity: "error",
                     summary: "Error",
@@ -185,6 +188,17 @@ function Users() {
             setEditDialog(true)
         }
     }, [selectedUser])
+
+
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/");
+        } else {
+            setIsAuthenticated(true);
+        }
+    }, [navigate])
 
     return (
         <div>

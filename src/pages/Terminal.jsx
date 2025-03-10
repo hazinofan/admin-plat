@@ -3,10 +3,13 @@ import { Terminal } from 'primereact/terminal';
 import { TerminalService } from 'primereact/terminalservice';
 import Layout from '../components/Layout';
 import { getProducts } from '../core/services/products.services';
+import { useNavigate } from 'react-router-dom';
 
 export default function TerminalDemo() {
 
     const [products, setProducts] = useState([]);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
 
     async function fetchProducts() {
         try {
@@ -63,6 +66,15 @@ export default function TerminalDemo() {
             TerminalService.off('command', commandHandler);
         };
     }, []);
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/");
+        } else {
+            setIsAuthenticated(true);
+        }
+    }, [navigate])
 
     return (
         <Layout>

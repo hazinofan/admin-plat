@@ -1,8 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(true);
+  const navigate = useNavigate()
+
+  const logout = () => {
+    localStorage.clear()
+    navigate('/')
+  }
 
   return (
     <aside
@@ -142,14 +148,14 @@ const Sidebar = () => {
           </a>
 
 
-          <Link
-            className={`flex items-center px-3 py-2 text-gray-600 transition-all duration-300 rounded-lg hover:bg-red-100 dark:hover:bg-gray-800 hover:text-gray-700 ${isExpanded ? "" : "justify-center"
+          <a
+            className={`flex items-center cursor-pointer px-3 py-2 text-gray-600 transition-all duration-300 rounded-lg hover:bg-red-100 dark:hover:bg-gray-800 hover:text-gray-700 ${isExpanded ? "" : "justify-center"
               }`}
-            to="/themes"
+            onClick={logout}
           >
             <i className="pi pi-sign-out text-red-500 text-lg"></i>
             {isExpanded && <span className="ml-2 text-red-500 text-sm font-medium">LOG OUT</span>}
-          </Link>
+          </a>
 
 
         </div>

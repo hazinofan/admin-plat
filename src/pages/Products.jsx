@@ -10,11 +10,14 @@ import { addProduct, deleteProduct, getProductById, getProducts } from "../core/
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Dropdown } from "primereact/dropdown";
+import { useNavigate } from "react-router-dom";
 
 function Products() {
     const [visible, setVisible] = useState(false);
     const [detailsVisible, setDetailsVisible] = useState(false);
     const [products, setProducts] = useState([]);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
     const [uploadedFileName, setUploadedFileName] = useState(null);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const toast = useRef(null);
@@ -159,6 +162,15 @@ function Products() {
     useEffect(() => {
         fetchProducts();
     }, []);
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/");
+        } else {
+            setIsAuthenticated(true);
+        }
+    }, [navigate])
 
     const actionBodyTemplate = (rowData) => {
         return (

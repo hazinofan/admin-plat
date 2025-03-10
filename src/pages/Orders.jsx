@@ -10,10 +10,13 @@ import { InputNumber } from 'primereact/inputnumber'
 import { SelectButton } from 'primereact/selectbutton'
 import { Toast } from 'primereact/toast'
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
+import { useNavigate } from 'react-router-dom'
 
 function Orders() {
 
     const [loading, setLoading] = useState(false)
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
     const [visible, setVisible] = useState(false)
     const [orders, setOrders] = useState([])
     const [selectedOrder, setSelectedOrder] = useState(null)
@@ -97,7 +100,7 @@ function Orders() {
                 detail: "Order Status Updated Successfully !",
                 life: 3000,
             });
-            setVisible(false); 
+            setVisible(false);
 
             // Refresh the orders list
             getUsersOrders();
@@ -119,21 +122,21 @@ function Orders() {
             reject: () => toast.current.show({ severity: "info", summary: "Cancelled", detail: "Order deletion cancelled", life: 2000 }),
         });
     };
-    
-    
+
+
 
     const handleDeleteOrder = async (orderId) => {
         try {
             await deleteOrder(orderId);
             toast.current.show({ severity: "success", summary: "Deleted", detail: "Order deleted successfully!", life: 3000 });
-            getUsersOrders(); 
+            getUsersOrders();
         } catch (error) {
             console.error("❌ Error deleting order:", error);
             toast.current.show({ severity: "error", summary: "Error", detail: "Failed to delete order!", life: 3000 });
         }
     };
-    
-    
+
+
 
 
     const actionBodyTemplate = (rowData) => {
@@ -148,6 +151,15 @@ function Orders() {
     useEffect(() => {
         getUsersOrders()
     }, [])
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/");
+        } else {
+            setIsAuthenticated(true);
+        }
+    }, [navigate])
     return (
         <Layout>
             <Toast ref={toast} />

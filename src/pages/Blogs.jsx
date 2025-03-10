@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Layout from "../components/Layout";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { deleteBlog, getAllBlogs } from "../core/services/blogs.services";
@@ -11,6 +11,8 @@ function Blogs() {
     const [blogs, setBlogs] = useState([]);
     const [imagePreview, setImagePreview] = useState(null);
     const [isDialogVisible, setIsDialogVisible] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate()
     const toast = useRef(null);
 
     async function getBlogs() {
@@ -98,6 +100,15 @@ function Blogs() {
     useEffect(() => {
         getBlogs();
     }, []);
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/");
+        } else {
+            setIsAuthenticated(true);
+        }
+    },[navigate])
 
     return (
         <Layout>

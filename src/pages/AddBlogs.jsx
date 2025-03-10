@@ -15,7 +15,9 @@ const AddBlogs = () => {
     const [content, setContent] = useState(""); // ✅ Fixed
     const [imageUrl, setImageUrl] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const router = useNavigate()
+    const navigate = useNavigate()
 
     const linkHandler = (quill) => {
         const url = prompt("Enter the URL (e.g., https://example.com):");
@@ -55,7 +57,7 @@ const AddBlogs = () => {
             },
         });
         quill.on("text-change", () => {
-            const updatedContent = quill.root.innerHTML.trim(); 
+            const updatedContent = quill.root.innerHTML.trim();
             setContent(updatedContent);
         });
 
@@ -124,6 +126,14 @@ const AddBlogs = () => {
         }
     };
 
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/");
+        } else {
+            setIsAuthenticated(true);
+        }
+    },[navigate])
 
     return (
         <Layout>
