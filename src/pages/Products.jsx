@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import environement from "../core/environement";
 
 function Products() {
-    const ENGINE = environement.ENGINE_URL
+const API_URL = environement.BACKEND_URL
     const [visible, setVisible] = useState(false);
     const [updateVisible, setUpdateVisible] = useState(false);
     const [editedProduct, setEditedProduct] = useState(null);
@@ -76,7 +76,7 @@ function Products() {
 
         try {
             const response = await axios.post(
-                `${ENGINE}/upload`,
+                `${API_URL}/upload`,
                 formData,
                 {
                     headers: {

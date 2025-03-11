@@ -7,7 +7,7 @@ import environement from "../core/environement";
 const QuillEditor = () => {
     const quillRef = useRef(null);
     const [content, setContent] = useState("");
-    const ENGINE = environement.ENGINE_URL
+const API_URL = environement.BACKEND_URL
 
     useEffect(() => {
         const quill = new Quill(quillRef.current, {
@@ -50,7 +50,7 @@ const QuillEditor = () => {
             formData.append("file", file);
 
             try {
-                const response = await axios.post(`${ENGINE}/upload`, formData, {
+                const response = await axios.post(`${API_URL}/upload`, formData, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
 

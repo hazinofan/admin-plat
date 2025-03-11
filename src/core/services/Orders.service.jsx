@@ -1,8 +1,7 @@
 import axios from "axios";
 import environement from "../environement";
 
-
-const BASE_URL = environement.ENGINE_URL
+const API_URL = environement.BACKEND_URL ;
 
 // Retrieve token from localStorage
 const getToken = () => localStorage.getItem("token");
@@ -11,7 +10,7 @@ const getToken = () => localStorage.getItem("token");
 export const getAllOrders = async () => {
     const token = getToken();
 
-    const response = await axios.get(`${BASE_URL}/users/orders`, {
+    const response = await axios.get(`${API_URL}/users/orders`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -23,7 +22,7 @@ export const getAllOrders = async () => {
 export const getOrderById = async (orderId) => {
     const token = getToken();
 
-    const response = await axios.get(`${BASE_URL}/users/orders/${orderId}`, {
+    const response = await axios.get(`${API_URL}/users/orders/${orderId}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -35,7 +34,7 @@ export const getOrderById = async (orderId) => {
 export const deleteOrder = async (orderId) => {
     const token = getToken();
 
-    const response = await axios.delete(`${BASE_URL}/users/orders/${orderId}`, {
+    const response = await axios.delete(`${API_URL}/users/orders/${orderId}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },

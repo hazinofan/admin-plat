@@ -20,7 +20,7 @@ const AddBlogs = () => {
     const router = useNavigate()
     const navigate = useNavigate()
 
-    const ENGINE = environement.ENGINE_URL
+const API_URL = environement.BACKEND_URL
 
     const linkHandler = (quill) => {
         const url = prompt("Enter the URL (e.g., https://example.com):");
@@ -78,7 +78,7 @@ const AddBlogs = () => {
         formData.append("file", file);
 
         try {
-            const response = await axios.post(`${ENGINE}/upload`, formData, {
+            const response = await axios.post(`${API_URL}/upload`, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
 

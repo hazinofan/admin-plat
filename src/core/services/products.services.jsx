@@ -1,8 +1,7 @@
 import axios from "axios";
 import environement from "../environement";
 
-// Define the base URL for the backend API
-const BASE_URL = environement.ENGINE_URL;
+const API_URL = environement.BACKEND_URL ;
 
 // Get the token from localStorage
 const getAuthToken = () => localStorage.getItem("token");
@@ -18,7 +17,7 @@ export const addProduct = async (productData) => {
 
     console.log("Sending payload to API:", productData)
 
-    const response = await axios.post(`${BASE_URL}/products`, productData, {
+    const response = await axios.post(`${API_URL}/products`, productData, {
       headers: {
         Authorization: `Bearer ${token}`,  
         "Content-Type": "application/json",
@@ -39,7 +38,7 @@ export const addProduct = async (productData) => {
 // Delete a product by ID
 export const deleteProduct = async (productId) => {
   try {
-    const response = await axios.delete(`${BASE_URL}/products/${productId}`, {
+    const response = await axios.delete(`${API_URL}/products/${productId}`, {
       headers: {
         Authorization: `Bearer ${getAuthToken()}`,
       },
@@ -54,7 +53,7 @@ export const deleteProduct = async (productId) => {
 // Get all products
 export const getProducts = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/products`);
+    const response = await axios.get(`${API_URL}/products`);
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -65,7 +64,7 @@ export const getProducts = async () => {
 // Get a product by ID
 export const getProductById = async (productId) => {
   try {
-    const response = await axios.get(`${BASE_URL}/products/${productId}`, {
+    const response = await axios.get(`${API_URL}/products/${productId}`, {
       headers: {
         Authorization: `Bearer ${getAuthToken()}`,
       },
@@ -81,7 +80,7 @@ export const getProductById = async (productId) => {
 export const updateProduct = async (productId, productData) => {
   try {
       const token = localStorage.getItem("token");
-      const response = await axios.patch(`${BASE_URL}/products/${productId}`, productData, {
+      const response = await axios.patch(`${API_URL}/products/${productId}`, productData, {
           headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",

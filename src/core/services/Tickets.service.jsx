@@ -1,14 +1,14 @@
 import axios from "axios";
 import environement from "../environement";
 
-const BASE_URL = environement.ENGINE_URL;
+const API_URL = environement.BACKEND_URL ;
 
 // Update Ticket Status
 export const updateTicketStatus = async (ticketId, newStatus) => {
     const token = localStorage.getItem("token"); // Assuming authentication uses a token
 
-    const response = await axios.patch(`${BASE_URL}/users/tickets/${ticketId}`, 
-        { status: newStatus }, // ✅ Sending the new status
+    const response = await axios.patch(`${API_URL}/users/tickets/${ticketId}`, 
+        { status: newStatus },
         {
             headers: { 
                 Authorization: `Bearer ${token}`,
@@ -24,7 +24,7 @@ export const updateTicketStatus = async (ticketId, newStatus) => {
 export const getTicketById = async (ticketId) => {
     const token = localStorage.getItem("token");
 
-    const response = await axios.get(`${BASE_URL}/users/tickets/${ticketId}`, {
+    const response = await axios.get(`${API_URL}/users/tickets/${ticketId}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },

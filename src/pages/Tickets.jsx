@@ -20,7 +20,7 @@ function Tickets() {
     const [selectedTicket, setSelectedTicket] = useState(null);
     const [status, setStatus] = useState("open"); // ✅ Add state for status
     const toast = useRef(null);
-    const ENGINE = environement.ENGINE_URL;
+const API_URL = environement.BACKEND_URL;
     const [ticket, setTicket] = useState([]);
 
     function formatDate(dateString) {
@@ -56,7 +56,7 @@ function Tickets() {
     async function getUsersTickets() {
         setLoading(true);
         try {
-            const response = await fetch(`${ENGINE}/users`);
+            const response = await fetch(`${API_URL}/users`);
             const data = await response.json();
             const allTickets = data
                 .flatMap((user) => user.ticket)

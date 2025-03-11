@@ -1,7 +1,7 @@
 import axios from "axios";
 import environement from "../environement";
 
-const BASE_URL = environement.ENGINE_URL;
+const API_URL = environement.BACKEND_URL ;
 
 // Retrieve token from localStorage
 const getToken = () => localStorage.getItem("token");
@@ -10,7 +10,7 @@ const getToken = () => localStorage.getItem("token");
 export const getAllUsers = async () => {
     const token = getToken();
 
-    const response = await axios.get(`${BASE_URL}/users`, {
+    const response = await axios.get(`${API_URL}/users`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -22,7 +22,7 @@ export const getAllUsers = async () => {
 export const getUserById = async (userId) => {
     const token = getToken();
 
-    const response = await axios.get(`${BASE_URL}/users/${userId}`, {
+    const response = await axios.get(`${API_URL}/users/${userId}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -34,7 +34,7 @@ export const getUserById = async (userId) => {
 export const deleteUser = async (userId) => {
     const token = getToken();
 
-    const response = await axios.delete(`${BASE_URL}/users/${userId}`, {
+    const response = await axios.delete(`${API_URL}/users/${userId}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -47,7 +47,7 @@ export const deleteUser = async (userId) => {
 export const updateUser = async (userId, updateData) => {
     const token = getToken();
 
-    const response = await axios.patch(`${BASE_URL}/users/${userId}/update`, updateData, {
+    const response = await axios.patch(`${API_URL}/users/${userId}/update`, updateData, {
         headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",

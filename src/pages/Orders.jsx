@@ -22,7 +22,7 @@ function Orders() {
     const [selectedOrder, setSelectedOrder] = useState(null)
     const [status, setStatus] = useState(null);
     const toast = useRef(null);
-    const ENGINE = environement.ENGINE_URL
+const API_URL = environement.BACKEND_URL
 
     const statusOptions = [
         { label: 'Pending', value: false },
@@ -47,7 +47,7 @@ function Orders() {
     async function getUsersOrders() {
         setLoading(true)
         try {
-            const response = await fetch(`${ENGINE}/users`)
+            const response = await fetch(`${API_URL}/users`)
             const data = await response.json()
             const allOrders = data.flatMap(user => user.orders)
                 .map(order => ({
@@ -84,7 +84,7 @@ function Orders() {
         if (!selectedOrder) return;
 
         try {
-            const response = await fetch(`${ENGINE}/users/orders/${selectedOrder.id}`, {
+            const response = await fetch(`${API_URL}/users/orders/${selectedOrder.id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ status }), // ✅ Send new status

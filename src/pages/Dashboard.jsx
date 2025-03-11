@@ -16,7 +16,7 @@ const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [chartData, setChartData] = useState(null);
 
-  const ENGINE = environement.ENGINE_URL;
+  const API_URL = environement.BACKEND_URL;
   const navigate = useNavigate();
 
   function formatDate(dateString) {
@@ -35,7 +35,7 @@ const Dashboard = () => {
   async function getUsersOrders() {
     setLoading(true);
     try {
-        const response = await fetch(`${ENGINE}/users`);
+        const response = await fetch(`${API_URL}/users`);
         const data = await response.json();
 
         const allOrders = data.flatMap(user => user.orders).map(order => ({

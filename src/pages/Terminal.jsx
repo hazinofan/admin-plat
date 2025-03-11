@@ -15,7 +15,7 @@ export default function TerminalDemo() {
     const [loading, setLoading] = useState(false)
     const [ordersId, setOrdersId] = useState([])
     const navigate = useNavigate();
-    const ENGINE = environement.ENGINE_URL
+const API_URL = environement.BACKEND_URL
 
     async function fetchProducts() {
         try {
@@ -42,7 +42,7 @@ export default function TerminalDemo() {
     async function getUsersOrders() {
         setLoading(true);
         try {
-            const response = await fetch(`${ENGINE}/users`);
+            const response = await fetch(`${API_URL}/users`);
             const data = await response.json();
 
             const allOrders = data
