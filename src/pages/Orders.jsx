@@ -167,13 +167,22 @@ function Orders() {
             <div className="">
                 <h1 className='text-3xl font-semibold mb-16'> Orders Validation </h1>
             </div>
-            <DataTable value={orders} tableStyle={{ minWidth: '50rem' }}>
+            <DataTable
+                value={orders}
+                tableStyle={{ minWidth: '50rem' }}
+                paginator
+                rows={10}
+                rowsPerPageOptions={[10, 20, 50]} // Options for page size selection
+                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+            >
                 <Column field="id" header="ID"></Column>
-                <Column field="total_price" header="total price"></Column>
+                <Column field="total_price" header="Total Price"></Column>
                 <Column field="created_at" header="Order Date/Time"></Column>
                 <Column field="products" header="Products"></Column>
                 <Column field="user.username" header="User"></Column>
-                <Column field="status" header="status"
+                <Column
+                    field="status"
+                    header="Status"
                     body={(rowData) => (
                         <span style={{ color: rowData.status ? 'green' : 'orange' }}>
                             {rowData.status ? "Done" : "Pending"}
@@ -182,6 +191,7 @@ function Orders() {
                 ></Column>
                 <Column header="Action" body={actionBodyTemplate} />
             </DataTable>
+
 
             {/* Dialog to Editthe fucking Orders */}
             <Dialog header="Order " visible={visible} style={{ width: '50vw' }} draggable={false} onHide={() => setVisible(false)}>

@@ -1,7 +1,8 @@
 import axios from "axios";
+import environement from "../environement";
 
 // Define the base URL for the backend API
-const BASE_URL = `http://localhost:3001/products`;
+const BASE_URL = environement.ENGINE_URL;
 
 // Get the token from localStorage
 const getAuthToken = () => localStorage.getItem("token");
@@ -9,27 +10,36 @@ const getAuthToken = () => localStorage.getItem("token");
 // Add a new product
 export const addProduct = async (productData) => {
   try {
-    console.log("Sending payload to API:", productData); // Log payload
-    const response = await axios.post(`${BASE_URL}`, productData, {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      throw new Error("No authentication token found.");
+    }
+
+    console.log("Sending payload to API:", productData)
+
+    const response = await axios.post(`${BASE_URL}/products`, productData, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${token}`,  
         "Content-Type": "application/json",
       },
     });
-    console.log("API response:", response.data); // Log response
+
+    console.log("API response:", response.data); 
     return response.data;
   } catch (error) {
     console.error("Error in addProduct service:", error);
-    console.error("Error details:", error.response?.data); // Log backend error message
-    throw error; // Re-throw the error for the calling function to handle
+    console.error("Error details:", error.response?.data); 
+    throw error;
   }
 };
+
 
 
 // Delete a product by ID
 export const deleteProduct = async (productId) => {
   try {
-    const response = await axios.delete(`${BASE_URL}/${productId}`, {
+    const response = await axios.delete(`${BASE_URL}/products/${productId}`, {
       headers: {
         Authorization: `Bearer ${getAuthToken()}`,
       },
@@ -44,8 +54,8 @@ export const deleteProduct = async (productId) => {
 // Get all products
 export const getProducts = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}`);
-    return response.data; 
+    const response = await axios.get(`${BASE_URL}/products`);
+    return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
     throw error;
@@ -55,7 +65,7 @@ export const getProducts = async () => {
 // Get a product by ID
 export const getProductById = async (productId) => {
   try {
-    const response = await axios.get(`${BASE_URL}/${productId}`, {
+    const response = await axios.get(`${BASE_URL}/products/${productId}`, {
       headers: {
         Authorization: `Bearer ${getAuthToken()}`,
       },
@@ -66,3 +76,22 @@ export const getProductById = async (productId) => {
     throw error;
   }
 };
+
+// Updating products
+export const updateProduct = async (productId, productData) => {
+  try {
+      const token = localStorage.getItem("token");
+      const response = await axios.patch(`${BASE_URL}/products/${productId}`, productData, {
+          headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+          },
+      });
+
+      return response.data;
+  } catch (error) {
+      console.error("Error updating product:", error);
+      throw error;
+  }
+};
+

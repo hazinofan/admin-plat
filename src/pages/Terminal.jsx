@@ -4,12 +4,18 @@ import { TerminalService } from 'primereact/terminalservice';
 import Layout from '../components/Layout';
 import { getProducts } from '../core/services/products.services';
 import { useNavigate } from 'react-router-dom';
+import { getAllUsers } from '../core/services/users.service';
+import environement from '../core/environement';
 
 export default function TerminalDemo() {
 
     const [products, setProducts] = useState([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [emails, setEmails] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [ordersId, setOrdersId] = useState([])
     const navigate = useNavigate();
+    const ENGINE = environement.ENGINE_URL
 
     async function fetchProducts() {
         try {
@@ -21,35 +27,80 @@ export default function TerminalDemo() {
         }
     }
 
+    async function fetchUsers() {
+        try {
+            const response = await getAllUsers()
+            const userEmails = response.map(user => user.email)
+            console.log(userEmails, 'emails');
+
+            setEmails(userEmails)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    async function getUsersOrders() {
+        setLoading(true);
+        try {
+            const response = await fetch(`${ENGINE}/users`);
+            const data = await response.json();
+
+            const allOrders = data
+                .flatMap(user => user.orders)
+                .filter(order => order.status === false)
+                .map(order => order.id);
+
+            setOrdersId(allOrders)
+        } catch (error) {
+            console.error("Error fetching orders:", error);
+            return [];
+        } finally {
+            setLoading(false);
+        }
+    }
+
+
     const commandHandler = (text) => {
         let response;
-        let argsIndex = text.indexOf(' ');
-        let command = argsIndex !== -1 ? text.substring(0, argsIndex) : text;
+        let args = text.split(' '); // Split command into parts
+        let command = args[0]; // Get the base command (first word)
+        let subCommand = args.slice(1).join(' '); // Get the rest (sub-command)
 
-        switch (command) {
-            case 'date':
-                response = 'Today is ' + new Date().toDateString();
-                break;
-
-            case 'prod_num':
+        if (command === 'santito') {
+            if (subCommand === 'prods') {
                 response = 'Total Number of products is ' + products.length;
-                break;
+            } else if (subCommand === 'emails') {
+                response = 'All Users emails: ' + emails.join(', ');
+            } else if (subCommand === 'pending orders') {
+                response = " Pending orders ID's :" + ' ' + ordersId
+            }
+            else if (!subCommand) {
+                response = 'Santito requires a valid sub-command (e.g., "santito prod_num" or "santito emails").';
+            } else {
+                response = 'Unknown sub-command for santito: ' + subCommand;
+            }
+        } else {
+            switch (command) {
+                case 'date':
+                    response = new Date().toDateString();
+                    break;
 
-            case 'mehdi':
-                response = 'Hola ' + 'Mehdi';
-                break;
+                case 'random':
+                    response = Math.floor(Math.random() * 100);
+                    break;
 
-            case 'random':
-                response = Math.floor(Math.random() * 100);
-                break;
+                case 'email':
+                    response = emails.join(', ');
+                    break;
 
-            case 'clear':
-                response = null;
-                break;
+                case 'clear':
+                    response = null;
+                    break;
 
-            default:
-                response = 'Unknown command: ' + command;
-                break;
+                default:
+                    response = 'Unknown command: ' + command;
+                    break;
+            }
         }
 
         if (response)
@@ -60,6 +111,8 @@ export default function TerminalDemo() {
 
     useEffect(() => {
         fetchProducts()
+        getUsersOrders()
+        fetchUsers()
         TerminalService.on('command', commandHandler);
 
         return () => {

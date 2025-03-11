@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import axios from "axios";
+import environement from "../core/environement";
 
 const QuillEditor = () => {
     const quillRef = useRef(null);
     const [content, setContent] = useState("");
+    const ENGINE = environement.ENGINE_URL
 
     useEffect(() => {
         const quill = new Quill(quillRef.current, {
@@ -48,7 +50,7 @@ const QuillEditor = () => {
             formData.append("file", file);
 
             try {
-                const response = await axios.post("http://localhost:3001/upload", formData, {
+                const response = await axios.post(`${ENGINE}/upload`, formData, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
 

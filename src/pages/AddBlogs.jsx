@@ -7,6 +7,7 @@ import Layout from "../components/Layout";
 import { saveBlog } from "../core/services/blogs.services";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import environement from "../core/environement";
 
 const AddBlogs = () => {
     const quillRef = useRef(null);
@@ -18,6 +19,8 @@ const AddBlogs = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const router = useNavigate()
     const navigate = useNavigate()
+
+    const ENGINE = environement.ENGINE_URL
 
     const linkHandler = (quill) => {
         const url = prompt("Enter the URL (e.g., https://example.com):");
@@ -75,7 +78,7 @@ const AddBlogs = () => {
         formData.append("file", file);
 
         try {
-            const response = await axios.post(`http://localhost:3001/upload`, formData, {
+            const response = await axios.post(`${ENGINE}/upload`, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
 
