@@ -149,6 +149,7 @@ const Sidebar = () => {
 
 
           <a
+          href="#"
             className={`flex items-center  px-3 py-2 text-gray-600 transition-all duration-300 rounded-lg hover:bg-red-100 dark:hover:bg-gray-800 hover:text-gray-700 ${isExpanded ? "" : "justify-center"
               }`}
             onClick={logout}
