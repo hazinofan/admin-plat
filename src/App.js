@@ -10,6 +10,7 @@ import Orders from "./pages/Orders";
 import Users from "./pages/Users";
 import Terminal from "./pages/Terminal";
 import Tickets from "./pages/Tickets";
+import Templates from "./pages/Templates";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/cmd" element={<Terminal />} />
         <Route path="/tickets" element={<Tickets />} />
+        <Route path="/templates" element={<Templates />} />
       </Routes>
     </Router>
   );

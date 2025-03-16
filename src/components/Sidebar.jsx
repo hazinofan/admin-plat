@@ -115,7 +115,7 @@ const Sidebar = () => {
             className={`px-3 text-xs text-gray-500 uppercase dark:text-gray-400 ${isExpanded ? "block" : "hidden"
               }`}
           >
-            Admin Commande prompt
+            Admin fast methods
           </label>
 
           <Link
@@ -125,6 +125,15 @@ const Sidebar = () => {
           >
             <i className="pi pi-desktop text-lg"></i>
             {isExpanded && <span className="ml-2 text-sm font-medium">Commande Prompt</span>}
+          </Link>
+
+          <Link
+            className={`flex items-center px-3 py-2 text-gray-600 transition-all duration-300 rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 ${isExpanded ? "" : "justify-center"
+              }`}
+            to="/templates"
+          >
+            <i className="pi pi-envelope text-lg"></i>
+            {isExpanded && <span className="ml-2 text-sm font-medium">Emails & invoice templates</span>}
           </Link>
         </div>
 
@@ -139,9 +148,9 @@ const Sidebar = () => {
           <a
             className={`flex items-center px-3 py-2 text-gray-600 transition-all duration-300 rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 ${isExpanded ? "" : "justify-center"
               }`}
-            href="https://platinium-iptv.com"  // ✅ External URL
-            target="_blank"  // ✅ Open in new tab
-            rel="noopener noreferrer"  // ✅ Security best practice
+            href="https://platinium-iptv.com"  
+            target="_blank"  
+            rel="noopener noreferrer"  
           >
             <i className="pi pi-eye text-lg"></i>
             {isExpanded && <span className="ml-2 text-sm font-medium"> VISIT PLATINIUM WEBSITE</span>}
